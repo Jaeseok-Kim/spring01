@@ -31,7 +31,7 @@
 			<td>${row.userid }</td>
 			<td><a href="${path}/member/view.do?userid=${row.userid}">${row.name }</a></td>
 			<td>${row.email }</td>
-			<td><fmt:formatDate value="${row.join_date}" timeZone="Asia/Hong-kong" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+			<td><fmt:formatDate value="${row.join_date}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 		</tr>
 		
 	<c:set var="rownum" value="${rownum-1 }"/>
