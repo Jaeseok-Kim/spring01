@@ -12,4 +12,7 @@ public interface MemberDAO {
 	
 	public int countMember();
 	public String getUserPw(String userid);
+	
+	public int idCheck(String userid);
+
 }

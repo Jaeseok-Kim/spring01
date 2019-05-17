@@ -3,6 +3,7 @@ package com.example.spring.member.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean checkPw(String userid,String passwd) {		
-		String encPw = getUserPw(userid); //DB에 저장되있는 암호화된 비밀번호
+		String encPw = memberDao.getUserPw(userid); //DB에 저장되있는 암호화된 비밀번호
 		logger.info("암호화 된 비밀번호 : "+encPw);
 		logger.info("사용자가 입력한 비밀번호 : "+passwd);
 		return passwordEncoder.matches(passwd, encPw);
@@ -64,8 +65,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String getUserPw(String userid) {
-		return memberDao.getUserPw(userid);
+	public void logout(HttpSession session) {
+		session.invalidate();
+	}
+
+	@Override
+	public int idCheck(String userid) {
+		return memberDao.idCheck(userid);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring.Paging;
@@ -99,5 +101,30 @@ public class MemberController {
 			return "member/view";
 		}
 	}
+
+	@ResponseBody
+	  @RequestMapping("member/loginCheck.do") 
+	  public HashMap login_check(@ModelAttribute MemberDTO memberDto, HttpSession session) {
+		  Map<String,Object> map = new HashMap<>();
+		  
+		  int idResult = memberService.idCheck(memberDto.getUserid());//user가 입력한 ID의 존재 여부 확인
+		  map.put("idResult", idResult);
+		  
+		  boolean result=memberService.checkPw(memberDto.getUserid(), memberDto.getPasswd());//password 일치여부 확인
+		  map.put("pwResult", result);
+		  
+		  if(idResult==1 && result == true) {// ID,PW 일치시 세션생성
+			  MemberDTO member = memberService.view(memberDto.getUserid());
+			  session.setAttribute("userid", member.getUserid());
+			  session.setAttribute("name", member.getName());
+		  }
+		  return (HashMap) map;
+	  }
+	  
+	  @RequestMapping("member/logout.do")
+	  public String logout(HttpSession session) {
+		  memberService.logout(session);
+		  return "redirect:/";
+	  }
 	
 }

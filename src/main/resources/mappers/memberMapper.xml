@@ -35,6 +35,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectUserPw" resultType="string">
 		select passwd from member where userid = #{userid}
 	</select>
+	
+	<select id="idCheck" resultType="int">
+		select count(*) from member where userid = #{userid}
+	</select>
+	
 </mapper>
 
 
