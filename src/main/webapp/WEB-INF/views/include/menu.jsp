@@ -62,8 +62,9 @@
 <div style="text-align:center;">
 	<a href="${path}/">MAIN</a>
 	<a href="${path}/member/list.do">회원 목록</a>
-	<a href="${path}/member/write.do">신규 회원 등록</a>
-	
+	<c:if test="${sessionScope.userid == null }">
+		<a href="${path}/member/write.do">신규 회원 등록</a>
+	</c:if>
 		<div style="text-align:right;">			
 			<c:if test="${sessionScope.userid == null }">
 				<button id="login">Log-in</button>

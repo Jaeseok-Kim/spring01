@@ -50,8 +50,12 @@
 	</tr>
 	
 </table>
-<input type="button" value="수정" id="updateBtn">
-<input type="button" value="회원삭제" id="deleteBtn">
+<c:if test="${sessionScope.userid == member.userid }">
+	<input type="button" value="수정" id="updateBtn">
+</c:if>
+<c:if test="${sessionScope.userid == 'admin' }">
+	<input type="button" value="회원삭제" id="deleteBtn">
+</c:if>
 </form>
 <div style="color:red">${message }</div>
 
